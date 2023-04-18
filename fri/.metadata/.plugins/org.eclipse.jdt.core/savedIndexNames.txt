@@ -1,0 +1,5 @@
+INDEX VERSION 1.131+C:\Users\Alumno.SALA2-PC31\Desktop\Nueva carpeta (3)\fri\.metadata\.plugins\org.eclipse.jdt.core
+2056916018.index
+2687083283.index
+1865797976.index
+3387140242.index
