@@ -160,6 +160,7 @@ public class Vista {
 					np.setDireccion(txtDireccion.getText());
 					np.setTelefono(txtTelefono.getText());
 					np.setEmail(txtEmail.getText());
+					limpiar();
 					if(np.Insertar()) {
 						JOptionPane.showMessageDialog(null, "Cliente insertado");
 					}else {
@@ -177,19 +178,94 @@ public class Vista {
 		frmCliente.getContentPane().add(btnInsertar);
 		
 		JButton btnCargar = new JButton("Cargar");
+		btnCargar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					String Id = JOptionPane.showInputDialog("introduce el ID al cargar");
+					Fri np = new Fri();
+					np.setId(Id);
+					if(np.Cargar()) {
+						txtId.setText(np.getId());
+						txtNombre.setText(np.getNombre());
+						txtDireccion.setText(np.getDireccion());
+						txtTelefono.setText(np.getTelefono());
+						txtEmail.setText(np.getEmail());
+						
+						
+						JOptionPane.showMessageDialog(null, "Provedor encontrado");
+					}else {
+						JOptionPane.showMessageDialog(null, "ERROR");
+					}
+				}catch(Exception e2) {
+					JOptionPane.showMessageDialog(null, "ERROR");
+				}
+			}
+		});
 		btnCargar.setBounds(123, 188, 89, 23);
 		frmCliente.getContentPane().add(btnCargar);
 		
 		JButton btbnBorrar = new JButton("Borrar");
+		btbnBorrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limpiar();
+			}
+		});
 		btbnBorrar.setBounds(230, 188, 89, 23);
 		frmCliente.getContentPane().add(btbnBorrar);
 		
 		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					String Id = JOptionPane.showInputDialog("introduce el ID al Eliminar");
+					Fri np = new Fri();
+					np.setId(Id);
+					if(np.Eliminar()) {
+						JOptionPane.showMessageDialog(null, "Provedor Borrado");
+					}else {
+						JOptionPane.showMessageDialog(null, "ERROR");
+					}
+				}catch(Exception e2) {
+					JOptionPane.showMessageDialog(null, "ERROR");
+				}
+			
+			}
+		});
 		btnEliminar.setBounds(71, 222, 89, 23);
 		frmCliente.getContentPane().add(btnEliminar);
 		
 		JButton btnActualizar = new JButton("Actualizar");
+		btnActualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Fri np=new Fri ();
+					np.setId(txtId.getText());
+					np.setNombre(txtNombre.getText());
+					np.setDireccion(txtDireccion.getText());
+					np.setTelefono(txtTelefono.getText());
+					np.setEmail(txtEmail.getText());
+					
+					if(np.Actualizar()) {
+						limpiar();
+						JOptionPane.showMessageDialog(null, "Cliente Actualizado");
+					}else {
+						JOptionPane.showMessageDialog(null, "ERROR");
+					}
+				}catch(Exception e2) {
+					JOptionPane.showMessageDialog(null, "ERROR");
+				}
+			}
+		});
 		btnActualizar.setBounds(215, 222, 89, 23);
 		frmCliente.getContentPane().add(btnActualizar);
+	}
+	public void limpiar () {
+		txtId.setText("");
+		txtNombre.setText("");
+		txtDireccion.setText("");
+		txtTelefono.setText("");
+		txtEmail.setText("");
 	}
 }

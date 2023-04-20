@@ -2,6 +2,7 @@ package Frida;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 public class Conexion {
 	private static final String controlador = "com.mysql.cj.jdbc.Driver";
@@ -31,9 +32,9 @@ public class Conexion {
 			ps=conectar().prepareStatement("INSERT INTO cliente VALUES(?,?,?,?,?)");
 			ps.setString(1, np.getId());
 			ps.setString(2, np.getNombre());
-			ps.setString(3, np.Direccion);
-			ps.setString(4, np.Telefono);
-			ps.setString(5, np.Email);
+			ps.setString(3, np.getDireccion());
+			ps.setString(4, np.getTelefono());
+			ps.setString(5, np.getEmail());
 			ps.executeUpdate();
 			return true;
 		
@@ -45,13 +46,75 @@ public class Conexion {
 		}	
 	
 	public boolean Actualizar(Fri np) {
-		return true;
+		PreparedStatement ps=null;
+		try {
+			if(np.Cargar()) {
+			ps=conectar().prepareStatement("UPDATE cliente SET "
+					+ "Nombre=?, "
+					+ "Direccion=?, "
+					+ "Telefono=?, "
+					+ "Email=? "
+					+"WHERE ID=? ");
+			
+			ps.setString(1, np.getNombre());
+			ps.setString(2, np.getDireccion());
+			ps.setString(3, np.getTelefono());
+			ps.setString(4, np.getEmail());
+			ps.setString(5, np.getId());
+			ps.executeUpdate();
+			return true;
+			}else {
+				return false;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 }
 	public boolean Eliminar(String Id) {
-		return true;
+		PreparedStatement ps=null;
+		try {
+			Fri np=new Fri();
+			np.setId(Id);
+			if(np.Cargar()) {
+			ps=conectar().prepareStatement("DELETE FROM cliente WHERE Id=?");
+			ps.setString(1,Id);
+			ps.executeUpdate();
+			return true;
+			}else {
+				return false;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 }
 	public boolean Cargar(Fri np) {
-		return true;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		try {
+			ps=conectar().prepareStatement("SELECT * FROM cliente WHERE Id=?");
+			ps.setString(1,np.getId());
+			rs=ps.executeQuery();
+			if(rs.next()) {
+				np.setId(rs.getString(1));
+				np.setNombre(rs.getString(2));
+				np.setDireccion(rs.getString(3));
+				np.setTelefono(rs.getString(4));
+				np.setEmail(rs.getString(5));
+			return true;	
+			}else {
+				return false;
+			}
+		
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 }
 
 }
