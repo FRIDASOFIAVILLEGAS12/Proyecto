@@ -40,7 +40,7 @@ public class Conexion {
 		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+	
 			return false;
 		}
 		}	
@@ -48,7 +48,9 @@ public class Conexion {
 	public boolean Actualizar(Fri np) {
 		PreparedStatement ps=null;
 		try {
-			if(np.Cargar()) {
+			Fri np2= new Fri();
+			np2.setId(np.getId());
+			if(np2.Cargar()) {
 			ps=conectar().prepareStatement("UPDATE cliente SET "
 					+ "Nombre=?, "
 					+ "Direccion=?, "
@@ -68,7 +70,7 @@ public class Conexion {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 			return false;
 		}
 }
@@ -87,7 +89,7 @@ public class Conexion {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 			return false;
 		}
 }
@@ -112,7 +114,7 @@ public class Conexion {
 		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 			return false;
 		}
 }
